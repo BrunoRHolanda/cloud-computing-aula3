@@ -20,11 +20,15 @@ jobs:
         run: |
           echo "$PRIVATE_KEY" > private_key
           chmod 600 private_key
+          
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME}
-              cd /home/ubuntu/cloud-computing-aula3 &&
-              git checkout main &&
-              git fetch --all &&
-              git reset --hard origin/main &&
-              git pull origin main &&
-              sudo npm i &&
-              sudo pm2 reload main.js
+
+          # Operations in EC2 Instance
+          sudo su \
+          && cd /home/ubuntu/cloud-computing-aula3 \
+          && git checkout main \
+          && git fetch --all \
+          && git reset --hard origin/main \
+          && git pull origin main \
+          && sudo npm i \
+          && sudo pm2 reload main.js
